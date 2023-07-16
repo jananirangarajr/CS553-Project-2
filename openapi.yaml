@@ -1,0 +1,285 @@
+openapi: 3.0.2
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /cars/{car_id}:
+    get:
+      summary: Get Car Details
+      operationId: get_car_details_cars__car_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Car Id
+            type: string
+          name: car_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      summary: Update Car Details
+      operationId: update_car_details_cars__car_id__put
+      parameters:
+        - required: true
+          schema:
+            title: Car Id
+            type: string
+          name: car_id
+          in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModifiedCar'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      summary: Delete Car Details
+      operationId: delete_car_details_cars__car_id__delete
+      parameters:
+        - required: true
+          schema:
+            title: Car Id
+            type: string
+          name: car_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /cars:
+    get:
+      summary: Get All Car Details
+      operationId: get_all_car_details_cars_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+    post:
+      summary: Add Car Details
+      operationId: add_car_details_cars_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cars'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /cars/order:
+    post:
+      summary: Get Order Details
+      operationId: get_order_details_cars_order_post
+      parameters:
+        - required: true
+          schema:
+            title: Part Number
+            type: string
+          name: part_number
+          in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Cars:
+      title: Cars
+      required:
+        - vin
+        - plate
+        - state
+        - model
+        - year
+        - owner_name
+        - owner_address
+        - owner_dl
+        - problem_description
+        - date_in
+        - date_out
+        - technician
+        - shop_id
+        - shop_name
+        - shop_city
+        - shop_state
+      type: object
+      properties:
+        vin:
+          title: Vin
+          type: string
+        plate:
+          title: Plate
+          type: string
+        state:
+          title: State
+          type: string
+        model:
+          title: Model
+          type: string
+        year:
+          title: Year
+          type: string
+        owner_name:
+          title: Owner Name
+          type: string
+        owner_address:
+          title: Owner Address
+          type: string
+        owner_dl:
+          title: Owner Dl
+          type: string
+        problem_description:
+          title: Problem Description
+          type: string
+        date_in:
+          title: Date In
+          type: string
+        date_out:
+          title: Date Out
+          type: string
+        technician:
+          title: Technician
+          type: string
+        shop_id:
+          title: Shop Id
+          type: string
+        shop_name:
+          title: Shop Name
+          type: string
+        shop_city:
+          title: Shop City
+          type: string
+        shop_state:
+          title: Shop State
+          type: string
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    ModifiedCar:
+      title: ModifiedCar
+      type: object
+      properties:
+        vin:
+          title: Vin
+          type: string
+        plate:
+          title: Plate
+          type: string
+        state:
+          title: State
+          type: string
+        model:
+          title: Model
+          type: string
+        year:
+          title: Year
+          type: string
+        owner_name:
+          title: Owner Name
+          type: string
+        owner_address:
+          title: Owner Address
+          type: string
+        owner_dl:
+          title: Owner Dl
+          type: string
+        problem_description:
+          title: Problem Description
+          type: string
+        date_in:
+          title: Date In
+          type: string
+        date_out:
+          title: Date Out
+          type: string
+        technician:
+          title: Technician
+          type: string
+        shop_id:
+          title: Shop Id
+          type: string
+        shop_name:
+          title: Shop Name
+          type: string
+        shop_city:
+          title: Shop City
+          type: string
+        shop_state:
+          title: Shop State
+          type: string
+    ValidationError:
+      title: ValidationError
+      required:
+        - loc
+        - msg
+        - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string

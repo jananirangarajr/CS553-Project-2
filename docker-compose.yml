@@ -1,0 +1,41 @@
+version: '3'
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:latest
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    restart: always
+    environment:
+      - MONGODB_CONTAINER_NAME=mongodb
+
+  ordersystem:
+    build: ./order-soap
+    container_name: ordersystem
+    ports:
+      - 8001:8001
+    environment:
+      - ORDER_CONTAINER_NAME=ordersystem
+
+  automobile:
+    build: ./app
+    container_name: automobile
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongodb
+      - ordersystem
+    environment:
+      - MONGODB_CONTAINER_NAME=mongodb
+      - REACT_APP_AUTOMOBILE_CONTAINER_NAME=automobile
+      - ORDER_CONTAINER_NAME=ordersystem
+
+  mikereact:
+    build: ./react
+    container_name: mike-react
+    ports:
+      - 3000:3000
+    depends_on:
+      - automobile
+    environment:
+      - REACT_APP_AUTOMOBILE_CONTAINER_NAME=automobile
